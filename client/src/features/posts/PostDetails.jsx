@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import {API_URL} from "../../constants.js";
+import { PostDelete, fetchPost } from "../../services/postService.js";
 
 function PostDetails () {
     const [post, setPost] = useState(null);
@@ -11,15 +11,10 @@ function PostDetails () {
         //busca el post por su ID
         const fetchCurrentPost = async () => {
             try {
-                const response = await fetch( `${API_URL}/${id}` )
-                if (response.ok) {
-                    const json = await response.json();
-                    setPost(json);
-                } else {
-                    throw response;
-                }
+                const json = await fetchPost(id);
+                setPost(json);
             } catch (e) {
-                console.log("An error ocurred:",e)
+                console.log("Ocurrio un error al buscar tu Post:",e)
             }
         };
         fetchCurrentPost()
@@ -27,16 +22,10 @@ function PostDetails () {
 
     const deletePost = async () => {
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE",
-            });
-            if (response.ok) {
-                navigate("/");
-            } else {
-                throw response;
-            }
+            await PostDelete(id);
+            navigate("/")
         } catch (e) {
-            console.error(e)
+            console.error("Ocurrio un error al eliminar tu post", e);
         }
 
     };
