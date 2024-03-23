@@ -60,4 +60,13 @@ async function updatePost (id, postData) {
     return response.json()
 }
 
-export { PostDelete, fetchPost, fetchAllPosts, createPost, updatePost }
+
+async function fetchAllPostComments(id) {
+    const response = await fetch(`${API_URL}/${id}/post_comments`);
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
+export { PostDelete, fetchPost, fetchAllPosts, createPost, updatePost, fetchAllPostComments }

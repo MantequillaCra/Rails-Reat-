@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { PostDelete, fetchPost } from "../../services/postService.js";
+import PostCommentsList from '../post_comments/PostCommentsList.jsx'
 
 function PostDetails () {
     const [post, setPost] = useState(null);
@@ -36,6 +37,7 @@ function PostDetails () {
         <p>{post.body}</p>
         <Link to={`edit`}><p>editar</p></Link>
         <button onClick={deletePost}>Delete</button>
+        < PostCommentsList />
     </div>
 }
 
