@@ -1,14 +1,21 @@
 class Api::V1::PostCommentsController < ApplicationController
   before_action :set_post_comment, only: %i[ show update destroy ]
 
-  # GET /post_comments
-  def index
+  
+  def comments_from_a_post
     # busca todos los posts por el Post_id y se almacenan en la variable @posts
     @comments = Post.find(params[:post_id])
     # llama todos los comentarios del post (por post_id) y los almacenan en la variable llamada @comments
     @postcomments = @comments.post_comments.all
 
     render json: @postcomments
+    
+  end
+  # GET /post_comments
+  def index
+    @post_comments = PostComment.all
+  
+    render json: @post_comments
   end
 
   # GET /post_comments/1

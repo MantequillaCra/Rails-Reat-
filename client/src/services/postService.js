@@ -69,4 +69,14 @@ async function fetchAllPostComments(id) {
     return response.json();
 }
 
-export { PostDelete, fetchPost, fetchAllPosts, createPost, updatePost, fetchAllPostComments }
+async function PostCommentDelete(id) {
+    const response = await fetch(`http://localhost:3000/api/v1/post_comments/${id}/`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json
+}
+
+export { PostDelete, fetchPost, fetchAllPosts, createPost, updatePost, fetchAllPostComments, PostCommentDelete }

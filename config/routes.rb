@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   #API routes should be in /api/v1
+  
   namespace :api do
     namespace :v1 do
       resources :posts do
-        resources :post_comments
+        get "post_comments", to: "post_comments#comments_from_a_post"
       end
+      resources :post_comments, except: [:comments_from_a_post]
+      
     end
   end
 

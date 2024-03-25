@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { API_URL } from "../../constants";
-import { fetchAllPostComments } from "../../services/postService";
+import { json, useParams } from "react-router-dom";
+import { fetchAllPostComments, PostCommentDelete } from "../../services/postService";
 
 function PostCommentsList(params) {
     
     const [comments, setComments] = useState([]);
     const [, setLoading] = useState(true);
 	const [, setError] = useState(null);
-    const { id } = useParams();
+    const {id} = useParams()
 
     useEffect(() => {
         async function loadPostComments() {
@@ -24,11 +23,20 @@ function PostCommentsList(params) {
         loadPostComments()
     },[])
 
+    const deleteComment = async (id) => {
+        try{
+            await PostCommentDelete(id);
+            setComments(comments.filter((comment) => comment.id !== id ));
+        } catch (e) {
+            console.error("Ocurrio un error al borrar",e)
+        }
+    } 
+
     return <div>
         {comments.map((comment) => (
             <div key={comment.id} className="post-container">
                 <p>{comment.body}</p>
-                <hr></hr>
+                <button onClick={ () => deleteComment(comment.id) }>eliminar</button>
             </div>
         ))}
 </div>

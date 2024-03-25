@@ -37,6 +37,7 @@ function PostDetails () {
         <p>{post.body}</p>
         <Link to={`edit`}><p>editar</p></Link>
         <button onClick={deletePost}>Delete</button>
+        <h4>Comentarios =D</h4>
         < PostCommentsList />
     </div>
 }
